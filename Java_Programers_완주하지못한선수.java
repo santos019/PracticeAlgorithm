@@ -1,5 +1,5 @@
 import java.util.HashMap;
-import java.util.Iterator;
+
 
 public class myObject{
     
@@ -42,7 +42,7 @@ class Solution {
             else
                 completionmap.put(completion[k],0);
        }
-        Iterator<String> keys = participantmap.keySet().iterator();
+      
 
        for(String answer: participantmap.keySet())
        {
