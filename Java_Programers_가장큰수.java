@@ -1,35 +1,45 @@
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.Comparator;
 class Solution {
-    
-public static void comb(int[] numbers,int[] out,boolean[] check, ArrayList<String> myarray,int depth, int n, int r)
-    {
-     if(depth==r)
-     {  String str="";
-         for(int k=0;k<n;k++)
-            str=str+Integer.toString(out[k]);
-        myarray.add(str);
-      return;
-      }
-    for(int i=0;i<n;i++)
-    {
-        if(check[i]!=true)
-        {
-            check[i]=true;
-            out[depth]=numbers[i];
-            comb(numbers,out,check,myarray,depth+1,n,r);
-            check[i]=false;
-        }
-     }
-    }
-    
-    
     public String solution(int[] numbers) {
-        int[] out= new int[numbers.length];
-        boolean[] check= new boolean[numbers.length];
-        ArrayList <String> myarray =new ArrayList<>();      
-        comb(numbers,out,check,myarray,0,numbers.length,numbers.length);
-        Collections.sort(myarray,Collections.reverseOrder()); 
-        return  Integer.parseInt(myarray.get(0))/Math.pow(10,myarray.size()-1)==0?"0":myarray.get(0);
+       
+        String str = "";
+        String tmp = "";
+        String[][] ans=new String[numbers.length][2];
+        for(int k=0;k<numbers.length;k++)
+        {   
+            if((int)(Math.log10(numbers[k])+1)==1)
+            {
+                tmp=Integer.toString(numbers[k])+Integer.toString(numbers[k])+Integer.toString(numbers[k])+Integer.toString(numbers[k]);
+            }else if((int)(Math.log10(numbers[k])+1)==2)
+            {
+                tmp=Integer.toString(numbers[k])+Integer.toString(numbers[k]/10)+Integer.toString(numbers[k]/10);
+            }
+            else if((int)(Math.log10(numbers[k])+1)==3)
+            {
+                tmp=Integer.toString(numbers[k])+Integer.toString(numbers[k]/100);
+            }
+            else tmp=Integer.toString(numbers[k]);
+         
+            ans[k][0]=tmp;
+            ans[k][1]=Integer.toString(numbers[k]);
+       
+        }
+        Arrays.sort(ans,new Comparator<String[]>() {
+			@Override
+			public int compare(String[] o1, String[] o2) {
+				if(o1[0].equals(o2[0]))
+					return (o1[1]+o2[1]).compareTo(o2[1]+o2[1]);
+				else
+					return o1[0].compareTo(o2[0]);
+			}
+		});
+        
+        for(int u=numbers.length-1;u>=0;u--)
+        {
+            str=str+ans[u][1];
+        }
+        return str.charAt(0)=='0'?"0":str;
+        
     }
 }
