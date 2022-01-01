@@ -2,7 +2,7 @@ class Solution {
   static int cnt=0;
     public int solution(int n, int[][] computers) {
         //System.out.println(computers.length);
-        int answer = 0;
+   
          boolean[] visited =new boolean[computers.length];
        
         for(int k=0;k<computers.length;k++)
